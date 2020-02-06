@@ -2,7 +2,7 @@ import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Authors } from './author.entity';
-import { CreateAuthorDto } from './dto/create';
+import { CreateAuthorDto, CreatedAuthorDto } from './dto/create';
 
 @Controller('author')
 export class AuthorController {
@@ -13,16 +13,13 @@ export class AuthorController {
   ) { }
 
   @Post()
-  async create(@Body() authorInput: CreateAuthorDto) {
+  async create(@Body() authorInput: CreateAuthorDto): Promise<CreatedAuthorDto | BadRequestException> {
 
     return await this.authorsRepository
     .save(authorInput)
-    .then(
-      resolve => resolve
-    )
+    .then((resolve) => new CreatedAuthorDto(resolve))
     .catch(
       reject => {
-        console.error(reject);
         throw new BadRequestException(reject.message)
       }
     )
