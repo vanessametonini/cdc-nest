@@ -7,30 +7,33 @@ import { Repository } from 'typeorm';
 describe('Creating an author', () => {
   
   let controller: AuthorController;
-  let repository: Repository<Authors>
+  let repository: Repository<Authors>;
+
+  const authorInput: CreateAuthorDto = {  
+    "email": "vanessa.tonini@caelum.com.br",
+    "name": "Vanessa Tonini",
+    "description": "Instrutora e desenvolvedora na Caelum"
+  }
 
   beforeEach(async () => {
     repository = new Repository()
     controller = new AuthorController(repository)
   });
 
-  it('Should return a complete author info with id and createdDate fields', () => {
+  it('Deverá retornar informações completas do autor inclusive com os campos id e createdDate', () => {
 
-    const authorInput: CreateAuthorDto = {  
-      "email": "vanessa.tonini@caelum.com.br",
-      "name": "Vanessa Tonini",
-      "description": "Instrutora e desenvolvedora na Caelum"
-    }
-
-    const result = new CreatedAuthorDto({...authorInput, ...{id: 'aaa', createdDate: '01022020'}})
-
+    
     jest.spyOn(controller, 'create').mockImplementation((input: CreateAuthorDto) => {
+      
+      const result = new CreatedAuthorDto({...input, ...{id: '789aee21-d2e0-495c-ba4e-baa15607bc81', createdDate: '2020-02-05 18:38:06.946683'}});
 
-      return Promise.resolve(result)
+      return Promise.resolve(result);
 
     })
 
-    expect(controller.create(authorInput)).resolves.toBe(result)
+    expect(controller.create(authorInput))
+    .resolves
+    .toStrictEqual(new CreatedAuthorDto({...authorInput, ...{id: '789aee21-d2e0-495c-ba4e-baa15607bc81', createdDate: '2020-02-05 18:38:06.946683'}}));
 
   });
 
