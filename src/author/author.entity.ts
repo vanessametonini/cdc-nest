@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
 
-@Entity()
-export class Authors {
+@Entity({name: 'authors'})
+export class Author {
   
   @PrimaryGeneratedColumn('uuid')
   id: string;

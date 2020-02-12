@@ -1,29 +1,24 @@
-import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Authors } from './author.entity';
+import { Author } from './author.entity';
 import { CreateAuthorDto, CreatedAuthorDto } from './dto/create';
 
 @Controller('author')
 export class AuthorController {
 
   constructor(
-    @InjectRepository(Authors)
-    private readonly authorsRepository: Repository<Authors>,
+    @InjectRepository(Author)
+    private readonly authorsRepository: Repository<Author>,
   ) { }
 
   @Post()
-  async create(@Body() authorInput: CreateAuthorDto): Promise<CreatedAuthorDto | BadRequestException> {
+  async create(@Body() authorInput: CreateAuthorDto): Promise<CreatedAuthorDto> {
 
     return await this.authorsRepository
     .save(authorInput)
-    .then((resolve) => new CreatedAuthorDto(resolve))
-    .catch(
-      reject => {
-        throw new BadRequestException(reject.message)
-      }
-    )
-      
+    .then((author) => new CreatedAuthorDto(author))
+    
   }
 
 }

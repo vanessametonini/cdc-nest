@@ -1,6 +1,7 @@
 import { IsEmail, MaxLength, MinLength, IsNotEmpty } from "class-validator";
 
 export class CreateAuthorDto {
+
   @MinLength(2)
   @IsNotEmpty()
   readonly name: string;
@@ -12,9 +13,11 @@ export class CreateAuthorDto {
   @IsNotEmpty()
   @MaxLength(400)
   readonly description: string;
+
 }
 
 export class CreatedAuthorDto {
+  
   readonly name: string;
   readonly email: string;
   readonly description: string;
@@ -28,6 +31,5 @@ export class CreatedAuthorDto {
     this.id = id;
     this.createdDate = createdDate; 
   }
-
 
 }

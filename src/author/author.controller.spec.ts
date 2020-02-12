@@ -1,5 +1,5 @@
 import { AuthorController } from './author.controller';
-import { Authors } from './author.entity';
+import { Author } from './author.entity';
 
 import { CreateAuthorDto, CreatedAuthorDto } from './dto/create';
 import { Repository } from 'typeorm';
@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 describe('Creating an author', () => {
   
   let controller: AuthorController;
-  let repository: Repository<Authors>;
+  let repository: Repository<Author>;
 
   const authorInput: CreateAuthorDto = {  
     "email": "vanessa.tonini@caelum.com.br",
@@ -25,9 +25,9 @@ describe('Creating an author', () => {
     
     jest.spyOn(controller, 'create').mockImplementation((input: CreateAuthorDto) => {
       
-      const result = new CreatedAuthorDto({...input, ...{id: '789aee21-d2e0-495c-ba4e-baa15607bc81', createdDate: '2020-02-05 18:38:06.946683'}});
+      const createdAuthor = new CreatedAuthorDto({...input, ...{id: '789aee21-d2e0-495c-ba4e-baa15607bc81', createdDate: '2020-02-05 18:38:06.946683'}});
 
-      return Promise.resolve(result);
+      return Promise.resolve(createdAuthor);
 
     })
 
