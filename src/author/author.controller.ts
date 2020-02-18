@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Author } from './author.entity';
@@ -18,6 +18,17 @@ export class AuthorController {
     return await this.authorsRepository
     .save(authorInput)
     .then((author) => new CreatedAuthorDto(author))
+    .catch( error => {
+
+      if(error.code == "ER_DUP_ENTRY") {
+        return {
+          message: error.message
+        }
+      }
+
+      return error
+      
+    })
     
   }
 
