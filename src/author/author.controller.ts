@@ -1,8 +1,9 @@
-import { Controller, Post, Body, HttpCode } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, UsePipes } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Author } from './author.entity';
 import { CreateAuthorDto, CreatedAuthorDto } from './dto/create';
+import { AuthorValidationPipe } from './pipes/author-validation.pipe';
 
 @Controller('author')
 export class AuthorController {
@@ -13,22 +14,12 @@ export class AuthorController {
   ) { }
 
   @Post()
+  @UsePipes(AuthorValidationPipe)
   async create(@Body() authorInput: CreateAuthorDto): Promise<CreatedAuthorDto> {
 
     return await this.authorsRepository
     .save(authorInput)
     .then((author) => new CreatedAuthorDto(author))
-    .catch( error => {
-
-      if(error.code == "ER_DUP_ENTRY") {
-        return {
-          message: error.message
-        }
-      }
-
-      return error
-      
-    })
     
   }
 

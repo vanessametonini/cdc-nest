@@ -6,8 +6,8 @@ export class CreateAuthorDto {
   @IsNotEmpty()
   readonly name: string;
 
-  @IsEmail()
   @IsNotEmpty()
+  @IsEmail()
   readonly email: string;
 
   @IsNotEmpty()
