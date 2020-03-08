@@ -19,7 +19,7 @@ export class AuthorValidationPipe implements PipeTransform<any> {
 
     const errors = await validate(object);
 
-    if(errors.length > 1) {
+    if(errors.length > 0) {
 
       for (const error of errors) {
 
@@ -35,7 +35,6 @@ export class AuthorValidationPipe implements PipeTransform<any> {
 
       }
     }
-
     return value;
 
   }
