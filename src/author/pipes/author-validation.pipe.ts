@@ -4,13 +4,13 @@ import { validate } from "class-validator";
 
 @Injectable()
 export class AuthorValidationPipe implements PipeTransform<any> {
-  
+
   async transform(value, { metatype }: ArgumentMetadata) {
-    
+
     // se não tiver um metatype ou 
     // se é tipo é um nativo do JavaScript
     // pula a validacao
-    if (!metatype || !this.toValidate(metatype)){
+    if (!metatype || !this.toValidate(metatype)) {
       return value;
     }
 
@@ -19,10 +19,9 @@ export class AuthorValidationPipe implements PipeTransform<any> {
 
     const errors = await validate(object);
 
-    if(errors.length > 0) {
+    if (errors.length > 0) {
 
-      for (const error of errors) {
-
+      return errors.map(error => {
         const constraints = error.constraints;
 
         for (const specificErrors in constraints) {
@@ -33,7 +32,8 @@ export class AuthorValidationPipe implements PipeTransform<any> {
           }
         }
 
-      }
+      })
+
     }
     return value;
 

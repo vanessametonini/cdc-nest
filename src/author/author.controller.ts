@@ -4,10 +4,8 @@ import { Repository } from 'typeorm';
 import { Author } from './author.entity';
 import { CreateAuthorDto, CreatedAuthorDto } from './dto/create';
 import { AuthorValidationPipe } from './pipes/author-validation.pipe';
-import { HttpExceptionFilter } from '../filters/http-exception.filter';
 
 @Controller('author')
-@UseFilters(new HttpExceptionFilter())
 export class AuthorController {
   constructor(
     @InjectRepository(Author)
