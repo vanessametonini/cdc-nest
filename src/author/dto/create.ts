@@ -1,4 +1,5 @@
 import { IsEmail, MaxLength, MinLength, IsNotEmpty } from "class-validator";
+import { IsEmailAlreadyExist } from "../validators/is-email-unique";
 
 export class CreateAuthorDto {
 
@@ -6,8 +7,11 @@ export class CreateAuthorDto {
   @IsNotEmpty()
   readonly name: string;
 
-  @IsEmail()
   @IsNotEmpty()
+  @IsEmail()
+  @IsEmailAlreadyExist({
+    message: "Email already registered"
+  })
   readonly email: string;
 
   @IsNotEmpty()
