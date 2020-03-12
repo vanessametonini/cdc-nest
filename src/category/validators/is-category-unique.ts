@@ -9,9 +9,9 @@ class IsCategoryAlreadyExistConstraint implements ValidatorConstraintInterface {
     validate(categoryName: any, args: ValidationArguments) {
 
         return getRepository(Category)
-              .findOne( {name: categoryName})
-              .then(name => {
-                if (name) return false;
+              .findOne({name: categoryName})
+              .then(category => {
+                if (category) return false;
                 return true;
               })
         

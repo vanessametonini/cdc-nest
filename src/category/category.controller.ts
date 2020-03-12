@@ -16,7 +16,7 @@ export class CategoryController {
   @Post()
   @UsePipes(ValidationPipe)
   async create(@Body() categoryInput: CreateCategoryDto){
-    return await this.categoryRepository.save(categoryInput).then( category => category)
+    return await this.categoryRepository.save(categoryInput).then(category => category)
   }
   
 }
