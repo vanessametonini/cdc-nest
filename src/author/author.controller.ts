@@ -14,14 +14,9 @@ export class AuthorController {
 
   @Post()
   @UsePipes(AuthorValidationPipe)
-  async create(
-    @Body() authorInput: CreateAuthorDto,
-  ): Promise<CreatedAuthorDto> {
+  async create(@Body() authorInput: CreateAuthorDto): Promise<CreatedAuthorDto> {
     return await this.authorsRepository
       .save(authorInput)
       .then(author => new CreatedAuthorDto(author))
-      .catch(erro => {
-        throw new HttpException(erro, 500);
-      });
   }
 }
