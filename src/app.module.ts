@@ -5,6 +5,8 @@ import { AuthorModule } from './author/author.module';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from '@nestjs/config';
 import { Author } from './author/author.entity';
+import { Category } from './category/category.entity';
+import { CategoryModule } from './category/category.module';
 
 
 
@@ -20,10 +22,11 @@ import { Author } from './author/author.entity';
       username: process.env.TYPEORM_USERNAME,
       password: process.env.TYPEORM_PASSWORD,
       port: parseInt(process.env.TYPEORM_PORT),
-      entities: [Author],
+      entities: [Author, Category],
       synchronize: true
     })
     ,AuthorModule
+    ,CategoryModule
   ],
   controllers: [AppController],
   providers: [],
