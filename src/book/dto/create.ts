@@ -1,10 +1,10 @@
-import { Book } from "../book.interface";
 import { IsNotEmpty, MaxLength, Min } from "class-validator";
 import { IsISBNAlreadyExist } from "../validators/is-isbn-unique";
 import { IsBookTitleAlreadyExist } from "../validators/is-title-unique";
 import { IsFutureDate } from "../validators/is-future-date";
+import { Category } from "../../category/category.entity";
 
-export class CreateBookDto implements Book {
+export class CreateBookDto {
 
   @IsNotEmpty()
   @IsBookTitleAlreadyExist({message: 'A book with the same title is already registered'})
@@ -32,5 +32,5 @@ export class CreateBookDto implements Book {
   readonly publishingDate: Date;
 
   @IsNotEmpty()
-  readonly category: string;
+  readonly category: Category;
 }

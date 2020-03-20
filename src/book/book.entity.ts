@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import { Book } from "./book.interface";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Category } from "../category/category.entity";
 
 @Entity({ name: 'books' })
-export class BookEntity implements Book {
+export class BookEntity {
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -27,6 +28,7 @@ export class BookEntity implements Book {
   @Column()
   publishingDate: Date;
 
-  @Column({ nullable: false })
-  category: string;
+  @ManyToOne(type => Category, category => category.id)
+  category: Category;
+
 }
