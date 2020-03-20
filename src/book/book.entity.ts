@@ -13,7 +13,7 @@ export class BookEntity {
   @Column({ nullable: false, length: 500 })
   abstract: string;
 
-  @Column({ type: 'longtext' })
+  @Column({ type: 'longtext', nullable: true })
   summary: string;
 
   @Column({ nullable: false })
