@@ -28,7 +28,7 @@ export class BookEntity {
   @Column()
   publishingDate: Date;
 
-  @ManyToOne(type => Category, category => category.id)
+  @ManyToOne(type => Category, (category: Category) => category.id)
   category: Category;
 
 }

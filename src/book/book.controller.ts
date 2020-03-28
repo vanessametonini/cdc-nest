@@ -13,8 +13,20 @@ export class BookController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  create(@Body() bookInput: CreateBookDto){
-    return this.bookRepository.save(bookInput).then( book => book)
+  async create(@Body() bookInput: CreateBookDto){
+
+    const book =  {
+      ISBN: bookInput.ISBN,
+      abstract: bookInput.abstract,
+      category: { id: bookInput.categoryId },
+      numberOfPages: bookInput.numberOfPages,
+      price: bookInput.price,
+      publishingDate: bookInput.publishingDate,
+      summary: bookInput.summary,
+      title: bookInput.title
+    }
+
+    return await this.bookRepository.save(book).then(book => book)
   }
   
 }

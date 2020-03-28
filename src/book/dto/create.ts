@@ -1,8 +1,7 @@
-import { IsNotEmpty, MaxLength, Min, IsEmpty } from "class-validator";
+import { IsNotEmpty, MaxLength, Min } from "class-validator";
 import { IsISBNAlreadyExist } from "../validators/is-isbn-unique";
 import { IsBookTitleAlreadyExist } from "../validators/is-title-unique";
 import { IsFutureDate } from "../validators/is-future-date";
-import { Category } from "../../category/category.entity";
 
 export class CreateBookDto {
 
@@ -32,5 +31,6 @@ export class CreateBookDto {
   readonly publishingDate: Date;
 
   @IsNotEmpty()
-  readonly category: Category;
+  readonly categoryId: number;
+  
 }
