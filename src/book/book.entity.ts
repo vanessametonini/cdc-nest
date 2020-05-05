@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { Category } from "../category/category.entity";
+import { Author } from "src/author/author.entity";
 
 @Entity({ name: 'books' })
 export class BookEntity {
@@ -30,5 +31,8 @@ export class BookEntity {
 
   @ManyToOne(type => Category, (category: Category) => category.id)
   category: Category;
+
+  @ManyToOne(type => Author, (author: Author) => author.id)
+  author: Author;
 
 }
