@@ -36,5 +36,9 @@ export class CreateBookDto {
   @IsNotEmpty()
   @IsUUID()
   readonly authorId: string;
+
+  public toBook() {
+    return {}
+  }
   
 }
