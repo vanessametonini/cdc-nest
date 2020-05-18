@@ -1,9 +1,9 @@
-import { Controller, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, Body, UsePipes, Get } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BookEntity } from './book.entity';
 import { Repository } from 'typeorm';
-
 import { ToBookPipe } from './pipes/to-book.pipe';
+import { CreateBookDto } from './dto/create';
 
 @Controller('book')
 export class BookController {
@@ -13,9 +13,18 @@ export class BookController {
   ){}
 
   @Post()
-  @UsePipes(ValidationPipe, ToBookPipe)
+  //@UsePipes(ToBookPipe)
   async create(@Body() book: BookEntity): Promise<BookEntity> {
-    return await this.bookRepository.save(book).then(book => book)
+    return await this.bookRepository.save(book)
+  }
+
+  @Get()
+  list() {
+    return this.bookRepository.find().then(bookList => {
+      console.log(bookList[1]);
+      
+      return bookList
+    })
   }
   
 }
