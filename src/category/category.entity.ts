@@ -9,4 +9,8 @@ export class Category {
   @Column({nullable: false})
   name: string;
 
+  constructor(partialCategory: Partial<Category>){
+    Object.assign(this, partialCategory)
+  }
+
 }

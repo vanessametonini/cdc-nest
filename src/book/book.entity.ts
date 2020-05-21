@@ -3,7 +3,7 @@ import { Category } from "../category/category.entity";
 import { Author } from "src/author/author.entity";
 import { Transform, Expose } from 'class-transformer';
 
-import { IsNotEmpty, MaxLength, Min, IsUUID } from "class-validator";
+import { IsNotEmpty, MaxLength, Min } from "class-validator";
 import { IsISBNAlreadyExist } from "src/book/validators/is-isbn-unique";
 import { IsBookTitleAlreadyExist } from "src/book/validators/is-title-unique";
 import { IsFutureDate } from "src/book/validators/is-future-date";
@@ -39,19 +39,22 @@ export class BookEntity {
   @Column({ nullable: false, unique: true })
   ISBN: string;
 
-  //@Expose({name: 'data'})
   @IsFutureDate({ message: 'The publishing date must be in the future from today' })
   @Column()
   publishingDate: Date;
 
   @IsNotEmpty()
   @Expose({ name: 'categoryId'})
-  @ManyToOne(type => Category, (category: Category) => category.id, { eager: true })
+  @Transform(category => category.id, { toPlainOnly: true}) //p get(output)
+  @Transform(id => new Category({id}), { toClassOnly: true})//p post(input)
+  @ManyToOne(type => Category, (category: Category) => category.id)
   category: Category;
 
-  @IsUUID()
+  @IsNotEmpty()
   @Expose({ name: 'authorId' })
-  @ManyToOne(type => Author, (author: Author) => author.id, { eager: true })
+  @Transform(author => author.id, { toPlainOnly: true })
+  @Transform(id => new Author({ id }), { toClassOnly: true })
+  @ManyToOne(type => Author, (author: Author) => author.id)
   author: Author;
 
 }
