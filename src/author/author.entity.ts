@@ -18,4 +18,8 @@ export class Author {
   @CreateDateColumn({nullable: false})
   createdDate: Date;
 
+  constructor (partialEntity: Partial<Author>) {
+    Object.assign(this, partialEntity)
+  }
+
 }

@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './category.entity';
 import { Repository } from 'typeorm';
 import { CreateCategoryDto } from './dto/create';
-import { ValidationPipe } from '../pipes/validation.pipe';
 
 @Controller('category')
 export class CategoryController {
@@ -14,7 +13,6 @@ export class CategoryController {
   ){}
   
   @Post()
-  @UsePipes(ValidationPipe)
   async create(@Body() categoryInput: CreateCategoryDto){
     return await this.categoryRepository.save(categoryInput).then(category => category)
   }

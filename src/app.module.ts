@@ -7,6 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 import { Author } from './author/author.entity';
 import { Category } from './category/category.entity';
 import { CategoryModule } from './category/category.module';
+import { BookModule } from './book/book.module';
+import { BookEntity } from './book/book.entity';
 
 
 
@@ -22,11 +24,12 @@ import { CategoryModule } from './category/category.module';
       username: process.env.TYPEORM_USERNAME,
       password: process.env.TYPEORM_PASSWORD,
       port: parseInt(process.env.TYPEORM_PORT),
-      entities: [Author, Category],
+      entities: [Author, Category, BookEntity],
       synchronize: true
     })
     ,AuthorModule
     ,CategoryModule
+    ,BookModule
   ],
   controllers: [AppController],
   providers: [],
